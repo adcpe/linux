@@ -1,0 +1,31 @@
+:root {
+  background-color: #112239;
+}
+
+.el {
+  color: #fafdfc;
+}
+
+.years {
+  color: #a20df2;
+}
+
+.months {
+  color: #00c86b;
+}
+
+.days {
+  color: #f4d825;
+}
+
+.hours {
+  color: #0d90ee;
+}
+
+.minutes {
+  color: #e84030;
+}
+
+.seconds {
+  color: #fc9e21;
+}
