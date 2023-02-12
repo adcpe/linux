@@ -1,5 +1,5 @@
 const distro = 'Arch Linux'
-const installDate = new Date('2023-01-28T23:23:38+0000')
+const installDate = new Date('2023-02-11T15:10:01+0000')
 
 class Difference {
   constructor(installDate) {
