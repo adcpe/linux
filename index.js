@@ -1,6 +1,8 @@
 const distro = 'Arch Linux'
 const installDate = new Date('2023-02-11T15:10:01+0000')
 
+const numPadding = (num) => (num > 0 && num < 10 ? `0${num}` : num)
+
 class Difference {
   constructor(installDate) {
     this.installDate = new Date(installDate)
@@ -99,7 +101,7 @@ const interval = setInterval(() => {
   $years.innerText = `${bd.inYears()} years `
   $months.innerText = `${bd.inMonths()} months `
   $days.innerText = `${bd.inDays()} days `
-  $hours.innerText = `${bd.inHours()} hours `
-  $minutes.innerText = `${bd.inMinutes()} minutes `
-  $seconds.innerText = `${bd.inSeconds()} seconds`
+  $hours.innerText = `${numPadding(bd.inHours())} hours `
+  $minutes.innerText = `${numPadding(bd.inMinutes())} minutes `
+  $seconds.innerText = `${numPadding(bd.inSeconds())} seconds`
 }, 1000)
