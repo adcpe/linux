@@ -1,5 +1,5 @@
 const distro = 'Arch Linux'
-const installDate = new Date('2023-02-11T15:10:01+0000')
+const installDate = new Date('2025-04-02T12:00:00+0000')
 
 const numPadding = (num) => (num > 0 && num < 10 ? `0${num}` : num)
 
