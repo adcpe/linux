@@ -48,11 +48,11 @@ class Difference {
 }
 
 function formatInstallationDate(installationDate) {
-  return `Installation date\n${new Intl.DateTimeFormat('default', {
+  return new Intl.DateTimeFormat('default', {
     dateStyle: 'full',
     timeStyle: 'full',
     timeZone: 'America/Lima',
-  }).format(installationDate)}`
+  }).format(installationDate)
 }
 
 const $app = document.getElementById('app')
@@ -62,17 +62,32 @@ const $distro = document.createElement('section')
 $distro.classList.add('distro')
 $app.appendChild($distro)
 
+const $distroLabel = document.createElement('h1')
+$distroLabel.innerText = 'Linux distribution'
+$distro.appendChild($distroLabel)
+
+const $distroName = document.createElement('span')
+$distroName.classList.add('distro-name')
+$distro.appendChild($distroName)
+
 const $installDate = document.createElement('section')
 $installDate.classList.add('install-date')
 $app.appendChild($installDate)
+
+const $installDateLabel = document.createElement('h1')
+$installDateLabel.innerText = 'Installation date'
+$installDate.appendChild($installDateLabel)
+
+const $installDateValue = document.createElement('span')
+$installDateValue.classList.add('install-date-value')
+$installDate.appendChild($installDateValue)
 
 const $timeElapsed = document.createElement('section')
 $timeElapsed.classList.add('time-elapsed')
 $app.appendChild($timeElapsed)
 
-const $timeElapsedLabel = document.createElement('span')
-$timeElapsedLabel.classList.add('time-elapsed-label')
-$timeElapsedLabel.innerText = 'Time elapsed since installation\n'
+const $timeElapsedLabel = document.createElement('h1')
+$timeElapsedLabel.innerText = 'Time elapsed since installation'
 $timeElapsed.appendChild($timeElapsedLabel)
 
 const $years = document.createElement('span')
@@ -103,8 +118,8 @@ $timeElapsed.appendChild($seconds)
 function updateElapsed() {
   const bd = new Difference(installDate)
 
-  $installDate.innerText = formatInstallationDate(installDate)
-  $distro.innerText = `Current distro\n${distro}`
+  $distroName.innerText = distro
+  $installDateValue.innerText = formatInstallationDate(installDate)
 
   $years.innerText = `${bd.inYears()} years, `
   $months.innerText = `${bd.inMonths()} months, `
