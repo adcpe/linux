@@ -1,43 +1,42 @@
 const distro = 'Arch Linux'
-const installDate = new Date('2025-04-02T12:00:00+0000')
+const installDate = new Date('2025-04-03T11:32:19-0500')
 
 const numPadding = (num) => (num > 0 && num < 10 ? `0${num}` : num)
 
 class Difference {
   constructor(installDate) {
-    this.installDate = new Date(installDate)
     this.now = new Date()
-    this.diff = Math.round((this.now - this.installDate) / 1000)
+    this.installDate = installDate
 
-    this.years = Math.floor(this.diff / (60 * 60 * 24 * 365))
-    this.months = Math.floor((this.diff - this.years * (60 * 60 * 24 * 365)) / (60 * 60 * 24 * 30))
-    this.days = Math.floor(
-      (this.diff - (this.years * (60 * 60 * 24 * 365) + this.months * (60 * 60 * 24 * 30))) /
-        (60 * 60 * 24)
-    )
-    this.hours = Math.floor(
-      (this.diff -
-        (this.years * (60 * 60 * 24 * 365) +
-          this.months * (60 * 60 * 24 * 30) +
-          this.days * (60 * 60 * 24))) /
-        (60 * 60)
-    )
-    this.minutes = Math.floor(
-      (this.diff -
-        (this.years * (60 * 60 * 24 * 365) +
-          this.months * (60 * 60 * 24 * 30) +
-          this.days * (60 * 60 * 24) +
-          this.hours * (60 * 60))) /
-        60
-    )
-    this.seconds = Math.floor(
-      this.diff -
-        (this.years * (60 * 60 * 24 * 365) +
-          this.months * (60 * 60 * 24 * 30) +
-          this.days * (60 * 60 * 24) +
-          this.hours * (60 * 60) +
-          this.minutes * 60)
-    )
+    this.years = this.now.getFullYear() - this.installDate.getFullYear()
+    this.months = this.now.getMonth() - this.installDate.getMonth()
+    this.days = this.now.getDate() - this.installDate.getDate()
+    this.hours = this.now.getHours() - this.installDate.getHours()
+    this.minutes = this.now.getMinutes() - this.installDate.getMinutes()
+    this.seconds = this.now.getSeconds() - this.installDate.getSeconds()
+
+    if (this.seconds < 0) {
+      this.seconds += 60
+      this.minutes--
+    }
+    if (this.minutes < 0) {
+      this.minutes += 60
+      this.hours--
+    }
+    if (this.hours < 0) {
+      this.hours += 24
+      this.days--
+    }
+    if (this.days < 0) {
+      // days in the month before `now`
+      const prevMonthDays = new Date(this.now.getFullYear(), this.now.getMonth(), 0).getDate()
+      this.days += prevMonthDays
+      this.months--
+    }
+    if (this.months < 0) {
+      this.months += 12
+      this.years--
+    }
   }
 
   inYears = () => this.years
@@ -48,60 +47,80 @@ class Difference {
   inSeconds = () => this.seconds
 }
 
-function formatBD(bd) {
-  const date = new Intl.DateTimeFormat('default', {
+function formatInstallationDate(installationDate) {
+  return `Installation date\n${new Intl.DateTimeFormat('default', {
     dateStyle: 'full',
-    timeStyle: 'long',
-    timeZone: 'America/Lima'
-  }).format(bd)
-  return date
+    timeStyle: 'full',
+    timeZone: 'America/Lima',
+  }).format(installationDate)}`
 }
 
 const $app = document.getElementById('app')
 
-const $installDate = document.createElement('div')
+// create DOM elements
+const $distro = document.createElement('section')
+$distro.classList.add('distro')
+$app.appendChild($distro)
+
+const $installDate = document.createElement('section')
+$installDate.classList.add('install-date')
 $app.appendChild($installDate)
-$installDate.innerText = formatBD(installDate)
 
-const $el = document.createElement('div')
-$el.classList.add('el')
-$app.appendChild($el)
-$el.innerText = `Current distro: ${distro}`
+const $timeElapsed = document.createElement('section')
+$timeElapsed.classList.add('time-elapsed')
+$app.appendChild($timeElapsed)
 
-const $diff = document.createElement('div')
-$app.appendChild($diff)
+const $timeElapsedLabel = document.createElement('span')
+$timeElapsedLabel.classList.add('time-elapsed-label')
+$timeElapsedLabel.innerText = 'Time elapsed since installation\n'
+$timeElapsed.appendChild($timeElapsedLabel)
 
 const $years = document.createElement('span')
 $years.classList.add('years')
-$diff.appendChild($years)
+$timeElapsed.appendChild($years)
 
 const $months = document.createElement('span')
 $months.classList.add('months')
-$diff.appendChild($months)
+$timeElapsed.appendChild($months)
 
 const $days = document.createElement('span')
 $days.classList.add('days')
-$diff.appendChild($days)
+$timeElapsed.appendChild($days)
 
 const $hours = document.createElement('span')
 $hours.classList.add('hours')
-$diff.appendChild($hours)
+$timeElapsed.appendChild($hours)
 
 const $minutes = document.createElement('span')
 $minutes.classList.add('minutes')
-$diff.appendChild($minutes)
+$timeElapsed.appendChild($minutes)
 
 const $seconds = document.createElement('span')
 $seconds.classList.add('seconds')
-$diff.appendChild($seconds)
+$timeElapsed.appendChild($seconds)
 
-const interval = setInterval(() => {
+// update function (runs immediately, then every second)
+function updateElapsed() {
   const bd = new Difference(installDate)
 
-  $years.innerText = `${bd.inYears()} years `
-  $months.innerText = `${bd.inMonths()} months `
-  $days.innerText = `${bd.inDays()} days `
-  $hours.innerText = `${numPadding(bd.inHours())} hours `
-  $minutes.innerText = `${numPadding(bd.inMinutes())} minutes `
+  $installDate.innerText = formatInstallationDate(installDate)
+  $distro.innerText = `Current distro\n${distro}`
+
+  $years.innerText = `${bd.inYears()} years, `
+  $months.innerText = `${bd.inMonths()} months, `
+  $days.innerText = `${bd.inDays()} days, `
+  $hours.innerText = `${numPadding(bd.inHours())} hours, `
+  $minutes.innerText = `${numPadding(bd.inMinutes())} minutes, `
   $seconds.innerText = `${numPadding(bd.inSeconds())} seconds`
-}, 1000)
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // run once immediately so content is ready in one paint
+  updateElapsed()
+
+  // reveal app (index.html has #app.preload to hide while computing)
+  $app.classList.remove('preload')
+
+  // keep ticking
+  setInterval(updateElapsed, 1000)
+})
