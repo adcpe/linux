@@ -63,6 +63,18 @@ const $days = document.querySelector('[data-days]')
 const $hours = document.querySelector('[data-hours]')
 const $minutes = document.querySelector('[data-minutes]')
 const $seconds = document.querySelector('[data-seconds]')
+const $themeSelect = document.getElementById('theme-select')
+
+const THEME_STORAGE_KEY = 'linux-theme'
+const DEFAULT_THEME = 'gruvbox'
+
+function applyTheme(theme) {
+  const nextTheme = theme || DEFAULT_THEME
+  document.documentElement.setAttribute('data-theme', nextTheme)
+  if ($themeSelect) {
+    $themeSelect.value = nextTheme
+  }
+}
 
 function updateElapsed() {
   const bd = new Difference(installDate)
@@ -79,6 +91,16 @@ function updateElapsed() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY)
+  applyTheme(savedTheme)
+  if ($themeSelect) {
+    $themeSelect.addEventListener('change', (event) => {
+      const { value } = event.target
+      localStorage.setItem(THEME_STORAGE_KEY, value)
+      applyTheme(value)
+    })
+  }
+
   updateElapsed()
   $app.classList.add('is-ready')
   setInterval(updateElapsed, 1000)
