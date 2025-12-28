@@ -8,7 +8,62 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <div id="app" class="preload"></div>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">ADC</span>
+        </div>
+      </header>
+
+      <main class="hero">
+        <section class="hero-copy">
+          <div class="meta-card">
+            <div>
+              <p class="meta-label">Distribution</p>
+              <p class="meta-value" data-distro></p>
+            </div>
+            <div>
+              <p class="meta-label">Installed on</p>
+              <p class="meta-value" data-install-date></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="timer-card">
+          <div class="timer-header">
+            <p class="eyebrow">Time elapsed</p>
+            <h2>Installation Age</h2>
+          </div>
+
+          <div class="timer-grid">
+            <div class="timer-block">
+              <span class="timer-value" data-years></span>
+              <span class="timer-label">Years</span>
+            </div>
+            <div class="timer-block">
+              <span class="timer-value" data-months></span>
+              <span class="timer-label">Months</span>
+            </div>
+            <div class="timer-block">
+              <span class="timer-value" data-days></span>
+              <span class="timer-label">Days</span>
+            </div>
+            <div class="timer-block">
+              <span class="timer-value" data-hours></span>
+              <span class="timer-label">Hours</span>
+            </div>
+            <div class="timer-block">
+              <span class="timer-value" data-minutes></span>
+              <span class="timer-label">Minutes</span>
+            </div>
+            <div class="timer-block">
+              <span class="timer-value" data-seconds></span>
+              <span class="timer-label">Seconds</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>

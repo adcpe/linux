@@ -1,20 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Sono:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300..900&family=Space+Grotesk:wght@300..700&display=swap');
 
 :root {
-  font-family: 'Sono', monospace;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: 'MONO' 1;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  background: #0c1224;
-  color: #d6deff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #e6e8ee;
+  background: #0e1116;
+  --cream: #f2efe8;
+  --cream-soft: #171b22;
+  --navy: #e6e8ee;
+  --teal: #4db6b1;
+  --sun: #f0b35a;
+  --coral: #f08b7a;
+  --shadow: rgba(6, 8, 12, 0.5);
 }
 
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -22,125 +23,184 @@
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(115, 169, 255, 0.25), transparent 28%),
-    radial-gradient(circle at 80% 0%, rgba(255, 148, 214, 0.18), transparent 30%),
-    linear-gradient(135deg, #0d1b2e 0%, #0a0f1f 70%);
-  color: inherit;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.06), transparent 35%);
-  pointer-events: none;
-  mix-blend-mode: screen;
+  background: #0d1117;
+  color: var(--navy);
 }
 
 #app {
-  width: min(960px, calc(100% - 2.5rem));
+  width: min(1100px, calc(100% - 3rem));
   margin: 0 auto;
-  padding: 2.5rem 0;
-  display: grid;
-  gap: 1.5rem;
-  align-items: start;
-}
-
-#app.preload {
-  opacity: 0;
-}
-
-section {
+  padding: 2.5rem 0 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
   position: relative;
+  z-index: 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'Archivo', sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: #202633;
+  color: #f0f3f9;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: rgba(31, 37, 50, 0.6);
+  margin-bottom: 0.75rem;
+}
+
+
+.meta-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
   padding: 1.5rem 1.75rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow:
-    0 10px 50px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  background: var(--cream-soft);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px var(--shadow);
+  margin-bottom: 2rem;
+  position: relative;
   overflow: hidden;
-  backdrop-filter: blur(10px);
 }
 
-section::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.08), transparent 35%);
-  z-index: 0;
+
+.meta-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(230, 232, 238, 0.6);
+  margin-bottom: 0.35rem;
 }
 
-section > * {
+.meta-value {
+  font-weight: 600;
+  font-size: 1.05rem;
   position: relative;
   z-index: 1;
 }
 
-h1 {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 0.85rem;
-  color: #8ea7d1;
-  margin-bottom: 0.35rem;
+
+.timer-card {
+  position: relative;
+  padding: 2.2rem;
+  border-radius: 28px;
+  background: #141922;
+  box-shadow: 0 25px 60px rgba(4, 7, 12, 0.7);
+  overflow: hidden;
 }
 
-.distro-name {
-  display: block;
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: #f2f5ff;
+.timer-header {
+  position: relative;
+  margin-bottom: 1.5rem;
 }
 
-.install-date-value {
-  display: block;
-  color: #e6ecff;
-  font-size: 1.05rem;
-  opacity: 0.9;
+.timer-header h2 {
+  font-family: 'Archivo', sans-serif;
+  font-size: 1.6rem;
 }
 
-.time-elapsed {
+.timer-grid {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin-bottom: 1.5rem;
 }
 
-.time-elapsed-label {
-  grid-column: 1 / -1;
-  margin-bottom: 0.3rem;
+.timer-block {
+  background: rgba(230, 232, 238, 0.08);
+  border-radius: 18px;
+  padding: 1rem;
+  text-align: center;
+  backdrop-filter: blur(6px);
 }
 
-.time-elapsed span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0.75rem 0.85rem;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f3f6ff;
-  font-variant-numeric: tabular-nums;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+.timer-value {
+  display: block;
+  font-family: 'Archivo', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--navy);
 }
 
-.time-elapsed span::after {
-  content: '';
-  flex: 1;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
-  margin: 0 0.25rem;
+.timer-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(230, 232, 238, 0.6);
+}
+
+
+#app.is-ready .hero-copy {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+#app.is-ready .timer-card {
+  animation: fadeInUp 0.7s ease 0.15s forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
-  :root {
-    font-size: 1rem;
-  }
-
   #app {
-    padding: 1.5rem 0.75rem;
+    width: min(100%, calc(100% - 2rem));
+    padding: 2rem 0 3rem;
   }
 
-  .distro-name {
-    font-size: 1.8rem;
+  .meta-card {
+    grid-template-columns: 1fr;
+  }
+
+  .timer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
