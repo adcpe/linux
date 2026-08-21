@@ -1,5 +1,5 @@
-const distro = 'Arch Linux'
-const installDate = new Date('2025-12-27T16:57:23-0500')
+const distro = 'Fedora'
+const installDate = new Date('2026-08-14T14:22:29-0500')
 
 const numPadding = (num) => (num > 0 && num < 10 ? `0${num}` : num)
 
